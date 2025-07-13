@@ -14,7 +14,7 @@ app.use(express.json());
 
 // ====== 火山引擎/即梦相关内容已删除 ======
 // 只保留通义千问API相关内容
-const QWEN_API_KEY = '';
+const QWEN_API_KEY = 'sk-6a496d64be234dd98bd17ea6992b2d15';
 const QWEN_API_URL = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
 
 // 通义千问文生图API
@@ -171,7 +171,7 @@ app.get('/api/ai-juice', async (req, res) => {
   }
 });
 
-const WANXIANG_API_KEY = '';
+const WANXIANG_API_KEY = 'sk-6a496d64be234dd98bd17ea6992b2d15';
 const WANXIANG_CREATE_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis';
 const WANXIANG_RESULT_URL = 'https://dashscope.aliyuncs.com/api/v1/tasks/';
 
