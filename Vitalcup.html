@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日蔬果 Vitalcup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f6fbf7 0%, #eaf6ef 100%);
+      --card-bg: #fff;
+      --main: #3BA769;
+      --main-dark: #2e7d4f;
+      --accent: #F6BE9A;
+      --text-main: #222;
+      --text-sub: #666;
+      --border: #e0f2f1;
+      --btn-bg: #eaf6ef;
+      --btn-text: #3BA769;
+      --btn-bg-hover: #d2e9db;
+      --btn-disabled: #f2f2f2;
+      --btn-text-disabled: #bdbdbd;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      font-family: 'Noto Serif SC', 'ZCOOL KuaiLe', 'Helvetica Neue', Arial, sans-serif;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 4px 32px rgba(137,201,151,0.10);
+      margin: 38px 0 0 0;
+      padding: 36px 32px 40px 32px;
+      max-width: 420px;
+      width: 95vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid var(--border);
+      animation: fadeIn 1.2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .main-title {
+      font-size: 2.1rem;
+      font-weight: bold;
+      color: var(--main);
+      letter-spacing: 2px;
+      text-align: center;
+      font-family: 'ZCOOL KuaiLe', 'Noto Serif SC', serif;
+      text-shadow: 0 2px 8px #e0f2f1;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 1.08rem;
+      color: var(--main-dark);
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .juice-img-wrap {
+      position: relative;
+      width: 80%;
+      max-width: 320px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .juice-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 20px;
+      background: #f1f8e9;
+      box-shadow: 0 4px 24px rgba(60,120,80,0.10);
+      border: 3px solid #e0f2f1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .juice-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      background: #fff;
+      display: block;
+    }
+    .juice-img .img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 1.1rem;
+      background: #f5f5f5;
+      border-radius: 20px;
+    }
+    .change-btn {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 16px;
+      padding: 6px 18px;
+      font-size: 1rem;
+      font-family: 'ZCOOL KuaiLe', 'Noto Serif SC', serif;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(111,207,151,0.10);
+      transition: background 0.3s, opacity 0.3s;
+      font-weight: bold;
+      letter-spacing: 1px;
+      opacity: 0.85;
+      z-index: 2;
+    }
+    .change-btn:hover:not(:disabled) {
+      background: var(--btn-bg-hover);
+      opacity: 1;
+    }
+    .change-btn:disabled {
+      background: var(--btn-disabled);
+      color: var(--btn-text-disabled);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .ingredients-title {
+      font-size: 1.13rem;
+      color: var(--main);
+      font-weight: bold;
+      margin: 18px 0 8px 0;
+      letter-spacing: 1px;
+      text-align: center;
+      width: 100%;
+    }
+    .ingredients {
+      font-size: 1.08rem;
+      color: var(--main-dark);
+      font-weight: bold;
+      margin-bottom: 32px;
+      text-align: center;
+      line-height: 1.7;
+      width: 100%;
+      padding-left: 2px;
+      letter-spacing: 1px;
+    }
+    .poem {
+      font-size: 1.18rem;
+      color: #6b7a8f;
+      font-style: italic;
+      font-family: 'Noto Serif SC', serif;
+      margin: 0 0 0 0;
+      text-align: center;
+      line-height: 2.1;
+      min-height: 64px;
+      opacity: 0;
+      animation: fadePoem 1.2s 0.3s forwards;
+      width: 100%;
+      padding-left: 2px;
+      letter-spacing: 0.5px;
+    }
+    @keyframes fadePoem {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .share-tip {
+      margin-top: 28px;
+      font-size: 0.98rem;
+      color: var(--accent);
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .main-title { font-size: 1.3rem; }
+      .card { padding: 14px 2vw 18px 2vw; margin-top: 10px; }
+      .juice-img-wrap { width: 98%; max-width: 98vw; }
+      .juice-img { border-radius: 12px; }
+      .juice-img img, .juice-img .img-placeholder { border-radius: 12px; }
+      .poem { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="auth-section" style="margin: 20px 0; max-width: 420px; width: 95vw; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(137,201,151,0.08); padding: 24px 18px; text-align: center;">
+    <div id="login-form">
+      <h3 style="margin-top:0;">登录</h3>
+      <input id="login-email" type="email" placeholder="邮箱" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
+      <input id="login-password" type="password" placeholder="密码" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
+      <button onclick="signIn()" style="margin: 10px 0; padding: 8px 24px; border-radius: 8px; background: #3BA769; color: #fff; border: none; font-weight: bold;">登录</button>
+      <div style="margin-top: 12px; font-size: 0.98rem; color: #666;">
+        没有账号？<a href="#" onclick="showSignUp();return false;" style="color:#3BA769;text-decoration:underline;">注册</a>
+      </div>
+    </div>
+    <div id="signup-form" style="display:none;">
+      <h3 style="margin-top:0;">注册</h3>
+      <input id="signup-email" type="email" placeholder="邮箱" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
+      <input id="signup-password" type="password" placeholder="密码" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
+      <button onclick="signUp()" style="margin: 10px 0; padding: 8px 24px; border-radius: 8px; background: #3BA769; color: #fff; border: none; font-weight: bold;">注册</button>
+      <div style="margin-top: 12px; font-size: 0.98rem; color: #666;">
+        已有账号？<a href="#" onclick="showLogin();return false;" style="color:#3BA769;text-decoration:underline;">登录</a>
+      </div>
+    </div>
+  </div>
+  <div id="main-section" style="display:none;">
+    <div class="card">
+      <div class="main-title">每日蔬果 Vitalcup</div>
+      <div class="subtitle" id="subtitle">2024年7月10日 · 小暑</div>
+      <div class="juice-img-wrap">
+        <div class="juice-img" id="juiceImg">
+          <img id="juiceImgTag" src="vitalcup_20240710_2.jpg" alt="今日蔬果汁" />
+          <div id="img-error" class="img-placeholder" style="display:none;">图片加载失败</div>
+        </div>
+        <button class="change-btn" id="changeBtn">换一款</button>
+      </div>
+      <div class="ingredients-title">原材料：</div>
+      <div class="ingredients" id="ingredients">芒果、奇异果、黄瓜、薄荷叶</div>
+      <div class="poem" id="poem">阳光透过玻璃，洒落在新鲜的芒果、奇异果与黄瓜之上，薄荷的清香在空气中轻轻荡漾。每一口，都是夏日清晨的第一缕微风，唤醒身体与心灵的温柔。</div>
+      <div class="share-tip">可分享今日蔬果卡片至微信/朋友圈/Instagram</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Supabase配置
+    const SUPABASE_URL = 'https://ypscwsplzpbhevzfuoma.supabase.co';
+    const SUPABASE_ANON_KEY = '';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // 登录/注册切换逻辑
+    function showSignUp() {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('signup-form').style.display = '';
+    }
+    function showLogin() {
+      document.getElementById('login-form').style.display = '';
+      document.getElementById('signup-form').style.display = 'none';
+    }
+    // 登录状态切换显示
+    async function checkAuthAndShow() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        document.getElementById('auth-section').style.display = 'none';
+        document.getElementById('main-section').style.display = '';
+      } else {
+        document.getElementById('auth-section').style.display = '';
+        document.getElementById('main-section').style.display = 'none';
+        showLogin();
+      }
+    }
+    // 注册
+    async function signUp() {
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        alert('注册失败: ' + error.message);
+      } else {
+        alert('注册成功，请查收邮箱验证邮件！');
+        checkAuthAndShow();
+      }
+    }
+    // 登录
+    async function signIn() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        alert('登录失败: ' + error.message);
+      } else {
+        alert('登录成功！');
+        checkAuthAndShow();
+      }
+    }
+    // 页面加载时自动获取每日推荐内容
+    async function updateDailyJuiceFromAPI() {
+      try {
+        const resp = await fetch('/api/daily-juice');
+        const data = await resp.json();
+        document.getElementById('subtitle').textContent = `${data.date} · ${data.solar_term}`;
+        document.getElementById('ingredients').textContent = data.ingredients;
+        document.getElementById('poem').textContent = data.poem;
+      } catch {
+        // 可显示默认内容或错误提示
+      }
+    }
+    // 页面加载时自动调用
+    updateDailyJuiceFromAPI();
+
+    // 新增：换一款按钮调用AI生成
+    document.getElementById("changeBtn").onclick = async function() {
+      this.disabled = true;
+      this.textContent = "生成中...";
+      const imgEl = document.getElementById("juiceImgTag");
+      const imgError = document.getElementById("img-error");
+      // 每次点击前，先隐藏错误占位，显示图片
+      imgError.style.display = 'none';
+      imgEl.style.display = '';
+      try {
+        // 1. 获取AI生成的蔬果汁内容
+        const resp = await fetch('/api/ai-juice');
+        const data = await resp.json();
+        document.querySelector(".ingredients-title").textContent = data.name || "蔬果禅饮";
+        document.getElementById("ingredients").textContent = data.ingredients;
+        document.getElementById("poem").textContent = data.poem;
+        // 2. 用配料内容生成图片
+        const imgResp = await fetch('/api/ai-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ingredients: data.ingredients, name: data.name })
+        });
+        const imgData = await imgResp.json();
+        if (imgData.url) {
+          imgEl.onload = function() {
+            imgEl.style.display = '';
+            imgError.style.display = 'none';
+          };
+          imgEl.onerror = function() {
+            imgEl.style.display = 'none';
+            imgError.style.display = 'flex';
+          };
+          imgEl.src = imgData.url;
+        } else {
+          imgEl.style.display = 'none';
+          imgError.style.display = 'flex';
+        }
+      } catch {
+        imgEl.style.display = 'none';
+        imgError.style.display = 'flex';
+        alert("生成失败，请重试！");
+      }
+      this.disabled = false;
+      this.textContent = "换一款";
+    };
+  </script>
+</body>
+</html>
