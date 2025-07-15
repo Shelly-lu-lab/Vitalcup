@@ -204,7 +204,7 @@
     .ingredients-tags {
       display: flex;
       flex-wrap: nowrap;
-      gap: 8px;
+      gap: 4px;
       margin-bottom: 12px;
       justify-content: center;
       overflow-x: auto;
@@ -212,13 +212,14 @@
     .tag {
       background: #eaf6ef;
       color: #3BA769;
-      border-radius: 12px;
-      padding: 2px 10px;
-      font-size: 0.92rem;
+      border-radius: 10px;
+      padding: 1px 7px;
+      font-size: 0.82rem;
       font-family: 'Noto Sans SC', sans-serif;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       font-weight: bold;
       white-space: nowrap;
+      margin: 0 2px;
     }
     .poem-card {
       background: #f6fbf7;
@@ -500,11 +501,302 @@
       min-height: 32px;
       opacity: 0.95;
     }
+    /* 设置页样式 */
+    #settingsView {
+      display: none;
+      width: 100vw;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 80vh;
+      background: linear-gradient(180deg, #f8fafd 0%, #f6f7fa 100%);
+      border-radius: 0 0 24px 24px;
+      box-sizing: border-box;
+      padding-bottom: 32px;
+    }
+    .settings-header {
+      text-align: center;
+      margin: 32px 0 18px 0;
+    }
+    .settings-header-icon {
+      font-size: 2.2rem;
+      color: #b96cfb;
+      margin-bottom: 6px;
+    }
+    .settings-header-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #49505a;
+      margin-bottom: 2px;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .settings-header-desc {
+      font-size: 1.02rem;
+      color: #7b8a9a;
+      margin-bottom: 18px;
+    }
+    .settings-user-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(137,201,151,0.08);
+      width: 92%;
+      max-width: 400px;
+      margin: 0 auto 18px auto;
+      padding: 18px 18px 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .settings-user-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: #a5d6a7;
+      color: #fff;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    .settings-user-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .settings-user-name {
+      font-size: 1.08rem;
+      font-weight: bold;
+      color: #222;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .settings-user-desc {
+      font-size: 0.98rem;
+      color: #7bbf8e;
+    }
+    .settings-list {
+      width: 92%;
+      max-width: 400px;
+      margin: 0 auto 18px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .settings-item {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(137,201,151,0.06);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.05rem;
+      color: #49505a;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .settings-item:active {
+      background: #f6fbf7;
+    }
+    .settings-item-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .settings-item-value {
+      color: #7bbf8e;
+      font-size: 1.02rem;
+    }
+    .settings-version {
+      text-align: right;
+      color: #b0b8c9;
+      font-size: 0.98rem;
+      margin: 8px 18px 0 0;
+    }
+    .settings-slogan {
+      text-align: center;
+      color: #7bbf8e;
+      font-size: 1.08rem;
+      margin-top: 32px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: bold;
+    }
+    /* 收藏卡片 */
+    #favoritesList {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 18px;
+    }
+    .favorite-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(137,201,151,0.10);
+      width: 96%;
+      max-width: 400px;
+      padding: 0 0 18px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid #e0f2f1;
+    }
+    .favorite-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 18px 18px 0 0;
+      object-fit: cover;
+      background: #f1f8e9;
+      border-bottom: 1.5px solid #e0f2f1;
+      display: block;
+    }
+    .favorite-card-title {
+      font-size: 1.12rem;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: bold;
+      color: #222;
+      margin-top: 10px;
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    .favorite-card-en {
+      font-size: 0.98rem;
+      color: #49505a;
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+    .favorite-card-date {
+      font-size: 0.92rem;
+      color: #7bbf8e;
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    .favorite-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+      justify-content: center;
+    }
+    .favorite-tag {
+      background: #eaf6ef;
+      color: #3BA769;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 0.92rem;
+      font-family: 'Noto Sans SC', sans-serif;
+      letter-spacing: 1px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .favorite-card-poem {
+      background: #f6fbf7;
+      border-radius: 14px;
+      color: #49505a;
+      font-size: 0.96rem;
+      font-style: normal;
+      font-weight: 300;
+      font-family: 'Noto Sans SC', sans-serif;
+      margin: 0 18px 0 18px;
+      padding: 14px 10px 10px 10px;
+      text-align: center;
+      line-height: 1.9;
+      min-height: 32px;
+      opacity: 0.95;
+    }
+    /* 反馈弹窗 */
+    #feedbackModal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .feedback-mask {
+      position: absolute;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(240,248,245,0.92);
+      z-index: 1;
+    }
+    .feedback-panel {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(137,201,151,0.13);
+      padding: 32px 24px 24px 24px;
+      min-width: 280px;
+      max-width: 90vw;
+      width: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .feedback-title {
+      font-size: 1.2rem;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: bold;
+      color: #b96cfb;
+      margin-bottom: 12px;
+    }
+    #feedbackForm {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    #feedbackContent {
+      font-size: 1rem;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #e0f2f1;
+      outline: none;
+      font-family: 'Noto Sans SC', 'Montserrat', Arial, sans-serif;
+      background: #f6fbf7;
+      color: #222;
+      min-height: 60px;
+      resize: vertical;
+      transition: border 0.2s;
+    }
+    #feedbackContent:focus {
+      border: 1.5px solid #b96cfb;
+    }
+    #feedbackSubmitBtn {
+      background: #b96cfb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 0;
+      font-size: 1.08rem;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: bold;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background 0.2s;
+    }
+    #feedbackSubmitBtn:active {
+      background: #8e4cc7;
+    }
+    .feedback-tip {
+      color: #e57373;
+      font-size: 0.98rem;
+      min-height: 22px;
+      margin-bottom: 4px;
+      text-align: center;
+    }
     @media (max-width: 600px) {
       .main-content, .footer-bar, .navbar { max-width: 100vw; }
       .juice-card { max-width: 99vw; }
       #historyView { max-width: 100vw; }
       .history-card { max-width: 99vw; }
+      #settingsView { max-width: 100vw; }
+      .settings-user-card, .settings-list, .favorite-card { max-width: 99vw; }
     }
     @media (max-width: 480px) {
       .auth-panel { width: 98vw; min-width: 0; padding: 18px 4vw 18px 4vw; }
@@ -584,6 +876,62 @@
       暂无历史记录<br>开始你的蔬果之旅，记录每一次美好的品味体验
     </div>
   </div>
+  <div id="settingsView" style="display:none;">
+    <div class="settings-header">
+      <div class="settings-header-icon"><i class="ri-settings-3-line"></i></div>
+      <div class="settings-header-title" id="settingsTitle">设置</div>
+      <div class="settings-header-desc" id="settingsDesc">个性化你的蔬果体验</div>
+    </div>
+    <div class="settings-user-card">
+      <div class="settings-user-avatar" id="userAvatar">V</div>
+      <div class="settings-user-info">
+        <div class="settings-user-name" id="userName">Vitalcup 用户</div>
+        <div class="settings-user-desc" id="userDesc">健康生活爱好者</div>
+      </div>
+    </div>
+    <div class="settings-list">
+      <div class="settings-item" id="langSetting">
+        <div class="settings-item-label"><i class="ri-global-line"></i><span id="langLabel">语言设置</span></div>
+        <div class="settings-item-value" id="langValue">简体中文</div>
+      </div>
+      <div class="settings-item" id="favSetting">
+        <div class="settings-item-label"><i class="ri-heart-line"></i><span id="favLabel">我的收藏</span></div>
+        <div class="settings-item-value" id="favCount">0个</div>
+      </div>
+      <div class="settings-item" id="feedbackSetting">
+        <div class="settings-item-label"><i class="ri-message-3-line"></i><span id="feedbackLabel">意见反馈</span></div>
+      </div>
+      <div class="settings-item" id="aboutSetting" style="cursor:default;">
+        <div class="settings-item-label"><i class="ri-information-line"></i><span id="aboutLabel">关于我们</span></div>
+        <div class="settings-item-value" id="versionValue">v1.0.0</div>
+      </div>
+    </div>
+    <div id="favoritesList" style="display:none;"></div>
+    <div class="settings-slogan" id="settingsSlogan">Vitalcup · 每日蔬果<br>让健康成为一种优雅的生活方式</div>
+  </div>
+  <div id="favoritesView" style="display:none;">
+    <div class="history-header">
+      <div class="history-header-icon"><i class="ri-heart-3-line"></i></div>
+      <div class="history-header-title">我的收藏</div>
+      <div class="history-header-desc">你喜欢的蔬果都在这里</div>
+    </div>
+    <div id="favoritesListPage" class="history-list"></div>
+    <div id="favoritesEmpty" class="history-empty-tip" style="display:none;">
+      暂无收藏<br>快去发现你喜欢的蔬果吧！
+    </div>
+    <button id="backToSettings" class="main-btn" style="margin: 0 auto 18px auto; display:block; width:90%;">返回设置</button>
+  </div>
+  <div id="feedbackModal" style="display:none;">
+    <div class="feedback-mask"></div>
+    <div class="feedback-panel">
+      <div class="feedback-title" id="feedbackTitle">意见反馈</div>
+      <form id="feedbackForm" autocomplete="off">
+        <textarea id="feedbackContent" placeholder="请输入您的宝贵意见..." required></textarea>
+        <button type="submit" id="feedbackSubmitBtn">提交</button>
+      </form>
+      <div class="feedback-tip" id="feedbackTip"></div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
   <script>
     // Supabase配置
@@ -592,6 +940,14 @@
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   </script>
   <script>
+    // 统一声明全局视图变量，避免重复声明
+    const mainContent = document.querySelector('.main-content');
+    const historyView = document.getElementById('historyView');
+    const settingsView = document.getElementById('settingsView');
+    const favoritesView = document.getElementById('favoritesView');
+    const favoritesListPage = document.getElementById('favoritesListPage');
+    const favoritesEmpty = document.getElementById('favoritesEmpty');
+    const backToSettings = document.getElementById('backToSettings');
     // 你可以在这里适配原有JS逻辑到新结构
     // 下面是主要内容动态填充和按钮事件适配
     // 假设你有AI接口和配料、物语等数据
@@ -601,7 +957,7 @@
       document.getElementById('juiceImgTag').src = data.imgUrl || 'vitalcup_20240710_2.jpg';
       document.getElementById('juiceNameCn').textContent = data.name || '清心露';
       document.getElementById('juiceNameEn').textContent = data.name_en || 'Morning Dew';
-      document.getElementById('dateLabel').textContent = data.date || getTodayDateStr();
+      document.getElementById('dateLabel').textContent = getTodayDateStr();
       document.getElementById('solarLabel').textContent = data.solar_term || '小暑';
       // 配料标签
       const tags = (data.ingredients || '芒果、奇异果、黄瓜、薄荷叶').split(/[、,，\s]+/);
@@ -626,8 +982,6 @@
     });
 
     // ========== 历史记录功能 ==========
-    const historyView = document.getElementById('historyView');
-    const mainContent = document.querySelector('.main-content');
     const historyList = document.getElementById('historyList');
     const historyEmpty = document.getElementById('historyEmpty');
     // 顶部历史按钮点击事件
@@ -696,7 +1050,7 @@
         // 始终用最新的name和name_en渲染
         document.getElementById("juiceNameCn").textContent = data.name || "清心露";
         document.getElementById("juiceNameEn").textContent = data.name_en || "Morning Dew";
-        document.getElementById("dateLabel").textContent = data.date || "2025年7月13日 星期日";
+        document.getElementById("dateLabel").textContent = getTodayDateStr();
         document.getElementById("solarLabel").textContent = data.solar_term || "小暑";
         // 配料标签兼容数组和字符串
         let tags = [];
@@ -840,6 +1194,242 @@
         showAuthModal(false);
       }
     });
+
+    // ========== 设置页功能 ==========
+    const settingsBtn = document.querySelector('.settings');
+    const langSetting = document.getElementById('langSetting');
+    const langValue = document.getElementById('langValue');
+    const favSetting = document.getElementById('favSetting');
+    const favCount = document.getElementById('favCount');
+    const feedbackSetting = document.getElementById('feedbackSetting');
+    const aboutSetting = document.getElementById('aboutSetting');
+    const favoritesList = document.getElementById('favoritesList'); // 设置页下方的收藏（已不再使用）
+    const userName = document.getElementById('userName');
+    const userAvatar = document.getElementById('userAvatar');
+    const langLabel = document.getElementById('langLabel');
+    const favLabel = document.getElementById('favLabel');
+    const feedbackLabel = document.getElementById('feedbackLabel');
+    const aboutLabel = document.getElementById('aboutLabel');
+    const versionValue = document.getElementById('versionValue');
+    const settingsTitle = document.getElementById('settingsTitle');
+    const settingsDesc = document.getElementById('settingsDesc');
+    const settingsSlogan = document.getElementById('settingsSlogan');
+    // 语言切换
+    let lang = localStorage.getItem('vitalcup-lang') || 'zh';
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem('vitalcup-lang', l);
+      // 文案切换
+      if (l === 'en') {
+        langValue.textContent = 'English';
+        langLabel.textContent = 'Language';
+        favLabel.textContent = 'Favorites';
+        feedbackLabel.textContent = 'Feedback';
+        aboutLabel.textContent = 'About';
+        versionValue.textContent = 'v1.0.0';
+        settingsTitle.textContent = 'Settings';
+        settingsDesc.textContent = 'Personalize your juice experience';
+        settingsSlogan.innerHTML = 'Vitalcup · Daily Juice<br>Let health become an elegant lifestyle';
+        document.getElementById('mainTitle').textContent = 'Today\'s Recommendation';
+        document.getElementById('mainSubtitle').textContent = 'A pure juice carefully selected for you';
+      } else {
+        langValue.textContent = '简体中文';
+        langLabel.textContent = '语言设置';
+        favLabel.textContent = '我的收藏';
+        feedbackLabel.textContent = '意见反馈';
+        aboutLabel.textContent = '关于我们';
+        versionValue.textContent = 'v1.0.0';
+        settingsTitle.textContent = '设置';
+        settingsDesc.textContent = '个性化你的蔬果体验';
+        settingsSlogan.innerHTML = 'Vitalcup · 每日蔬果<br>让健康成为一种优雅的生活方式';
+        document.getElementById('mainTitle').textContent = '今日推荐';
+        document.getElementById('mainSubtitle').textContent = '为你精心挑选的纯净蔬果汁';
+      }
+    }
+    // 先给主副标题加 id，确保 setLang 时能找到
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelector('.main-title').id = 'mainTitle';
+      document.querySelector('.main-subtitle').id = 'mainSubtitle';
+      // 语言切换
+      let lang = localStorage.getItem('vitalcup-lang') || 'zh';
+      setLang(lang);
+    });
+    langSetting.onclick = function() {
+      setLang(lang === 'zh' ? 'en' : 'zh');
+    };
+    // 设置页切换
+    settingsBtn.onclick = function() {
+      mainContent.style.display = 'none';
+      historyView.style.display = 'none';
+      settingsView.style.display = 'block';
+      loadUserInfo();
+      loadFavorites();
+    };
+    // 顶部首页按钮点击事件
+    document.querySelector('.home').onclick = function() {
+      historyView.style.display = 'none';
+      mainContent.style.display = 'flex';
+      settingsView.style.display = 'none';
+    };
+    // 顶部历史按钮点击事件
+    document.querySelector('.history').onclick = function() {
+      mainContent.style.display = 'none';
+      historyView.style.display = 'block';
+      settingsView.style.display = 'none';
+      loadHistory();
+    };
+    // 用户信息
+    async function loadUserInfo() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      userName.textContent = user.email || 'Vitalcup 用户';
+      userAvatar.textContent = user.email ? user.email[0].toUpperCase() : 'V';
+    }
+    // 收藏功能 - 设置页点击后切换到收藏独立页面
+    favSetting.onclick = function() {
+      mainContent.style.display = 'none';
+      historyView.style.display = 'none';
+      settingsView.style.display = 'none';
+      favoritesView.style.display = 'block';
+      loadFavoritesPage();
+    };
+    backToSettings.onclick = function() {
+      favoritesView.style.display = 'none';
+      settingsView.style.display = 'block';
+    };
+    async function loadFavoritesPage() {
+      favoritesListPage.innerHTML = '';
+      favoritesEmpty.style.display = 'none';
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('favorites')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+      if (error || !data || data.length === 0) {
+        favoritesEmpty.style.display = '';
+        return;
+      }
+      data.forEach(item => {
+        const tags = Array.isArray(item.ingredients) ? item.ingredients : (typeof item.ingredients === 'string' ? item.ingredients.split(/[、,，\s]+/) : []);
+        const tagsHtml = tags.filter(Boolean).map(t => `<span class='favorite-tag'>${t}</span>`).join('');
+        favoritesListPage.innerHTML += `
+          <div class="favorite-card">
+            <img src="${item.image_url || 'vitalcup_20240710_2.jpg'}" class="favorite-img" />
+            <div class="favorite-card-title">${item.name || ''}</div>
+            <div class="favorite-card-en">${item.name_en || ''}</div>
+            <div class="favorite-card-date">${item.date || ''} ${item.solar_term ? '· ' + item.solar_term : ''}</div>
+            <div class="favorite-card-tags">${tagsHtml}</div>
+            <div class="favorite-card-poem">${item.poem || ''}</div>
+          </div>
+        `;
+      });
+    }
+    // 设置页下方的收藏计数（保留）
+    async function loadFavorites() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('favorites')
+        .select('id')
+        .eq('user_id', user.id);
+      if (error || !data || data.length === 0) {
+        favCount.textContent = '0个';
+        return;
+      }
+      favCount.textContent = data.length + '个';
+    }
+    // 收藏按钮事件（首页右下角）
+    document.getElementById('favoriteBtn').onclick = async function() {
+      const btn = this;
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { alert('请先登录'); return; }
+      const name = document.getElementById('juiceNameCn').textContent;
+      const name_en = document.getElementById('juiceNameEn').textContent;
+      const date = document.getElementById('dateLabel').textContent;
+      const solar_term = document.getElementById('solarLabel').textContent;
+      const poem = document.getElementById('poemCard').textContent;
+      const imgUrl = document.getElementById('juiceImgTag').src;
+      const tags = Array.from(document.getElementById('ingredientsTags').querySelectorAll('.tag')).map(t=>t.textContent);
+      const juice_id = name + '_' + date;
+      const { data: favs } = await supabase
+        .from('favorites')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('juice_id', juice_id);
+      if (favs && favs.length > 0) {
+        alert('已收藏过该果汁');
+        // 立即本地切换为红色实心
+        btn.innerHTML = '<i class="ri-heart-fill"></i>';
+        btn.style.color = '#e74c3c';
+        btn.disabled = true;
+        updateFavoriteBtn();
+        return;
+      }
+      const { error } = await supabase
+        .from('favorites')
+        .insert([{ user_id: user.id, juice_id, name, name_en, date, solar_term, poem, image_url: imgUrl, ingredients: tags }]);
+      if (error) {
+        alert('收藏失败');
+      } else {
+        alert('已收藏！');
+        // 立即本地切换为红色实心
+        btn.innerHTML = '<i class="ri-heart-fill"></i>';
+        btn.style.color = '#e74c3c';
+        btn.disabled = true;
+        loadFavorites();
+        // 稍后再查数据库，确保状态同步
+        setTimeout(updateFavoriteBtn, 500);
+      }
+    };
+    // 首页收藏按钮变红，且不可重复收藏
+    async function updateFavoriteBtn() {
+      const btn = document.getElementById('favoriteBtn');
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        btn.innerHTML = '<i class="ri-heart-line"></i>';
+        btn.style.color = '';
+        btn.disabled = false;
+        return;
+      }
+      const name = document.getElementById('juiceNameCn').textContent;
+      const date = document.getElementById('dateLabel').textContent;
+      const juice_id = name + '_' + date;
+      const { data: favs } = await supabase
+        .from('favorites')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('juice_id', juice_id);
+      if (favs && favs.length > 0) {
+        btn.innerHTML = '<i class="ri-heart-fill"></i>';
+        btn.style.color = '#e74c3c';
+        btn.disabled = true;
+      } else {
+        btn.innerHTML = '<i class="ri-heart-line"></i>';
+        btn.style.color = '';
+        btn.disabled = false;
+      }
+    }
+    // 每次果汁卡片内容变化后调用
+    function afterJuiceCardUpdate() {
+      updateFavoriteBtn();
+    }
+    // 在 updateJuiceCard、换一款等地方调用 afterJuiceCardUpdate
+    // 修改 updateJuiceCard 函数
+    const oldUpdateJuiceCard = updateJuiceCard;
+    updateJuiceCard = function(data) {
+      oldUpdateJuiceCard(data);
+      afterJuiceCardUpdate();
+    };
+    // 换一款按钮事件后也调用
+    const oldChangeBtnClick = document.getElementById('changeBtn').onclick;
+    document.getElementById('changeBtn').onclick = async function() {
+      if (oldChangeBtnClick) await oldChangeBtnClick.apply(this, arguments);
+      afterJuiceCardUpdate();
+    };
+    // 页面初始也调用
+    document.addEventListener('DOMContentLoaded', afterJuiceCardUpdate);
   </script>
 </body>
 </html>
