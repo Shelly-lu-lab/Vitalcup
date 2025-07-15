@@ -3,322 +3,408 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>每日蔬果 Vitalcup</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <title>Vitalcup 每日蔬果</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&family=Montserrat:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">
   <style>
-    :root {
-      --bg-gradient: linear-gradient(135deg, #f6fbf7 0%, #eaf6ef 100%);
-      --card-bg: #fff;
-      --main: #3BA769;
-      --main-dark: #2e7d4f;
-      --accent: #F6BE9A;
-      --text-main: #222;
-      --text-sub: #666;
-      --border: #e0f2f1;
-      --btn-bg: #eaf6ef;
-      --btn-text: #3BA769;
-      --btn-bg-hover: #d2e9db;
-      --btn-disabled: #f2f2f2;
-      --btn-text-disabled: #bdbdbd;
-    }
     body {
       margin: 0;
       padding: 0;
+      background: #f6fbf7;
+      font-family: 'Noto Sans SC', 'Montserrat', Arial, sans-serif;
+      color: #222;
       min-height: 100vh;
-      background: var(--bg-gradient);
-      font-family: 'Noto Serif SC', 'ZCOOL KuaiLe', 'Helvetica Neue', Arial, sans-serif;
-      color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
     }
-    .card {
-      background: var(--card-bg);
-      border-radius: 24px;
-      box-shadow: 0 4px 32px rgba(137,201,151,0.10);
-      margin: 38px 0 0 0;
-      padding: 36px 32px 40px 32px;
-      max-width: 420px;
-      width: 95vw;
+    .navbar {
+      width: 100vw;
+      max-width: 480px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 18px 0 18px;
+      background: transparent;
+      box-sizing: border-box;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .title-cn {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 1.18rem;
+      font-weight: bold;
+      color: #222;
+      letter-spacing: 1px;
+    }
+    .title-en {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.86rem;
+      color: #222;
+      letter-spacing: 1px;
+      margin-top: 2px;
+      font-style: normal;
+    }
+    .nav-right {
+      display: flex;
+      gap: 12px;
+    }
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #3BA769;
+      box-shadow: 0 2px 8px rgba(137,201,151,0.08);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .icon-btn:active { background: #eaf6ef; }
+    .main-content {
+      width: 100vw;
+      max-width: 480px;
+      flex: 1 1 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1.5px solid var(--border);
-      animation: fadeIn 1.2s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin-top: 8px;
+      margin-bottom: 80px;
     }
     .main-title {
-      font-size: 2.1rem;
+      font-size: 1.6rem;
+      font-family: 'Noto Sans SC', sans-serif;
       font-weight: bold;
-      color: var(--main);
+      color: #222;
+      margin-top: 8px;
+      margin-bottom: 4px;
       letter-spacing: 2px;
-      text-align: center;
-      font-family: 'ZCOOL KuaiLe', 'Noto Serif SC', serif;
-      text-shadow: 0 2px 8px #e0f2f1;
-      margin-bottom: 12px;
     }
-    .subtitle {
-      font-size: 1.08rem;
-      color: var(--main-dark);
+    .main-subtitle {
+      font-size: 1.02rem;
+      color: #49505a;
       margin-bottom: 18px;
+      letter-spacing: 1px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 300;
+    }
+    .juice-card {
+      width: 94vw;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 4px 32px rgba(137,201,151,0.10);
+      padding: 0 0 18px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 18px;
+      border: 1.5px solid #e0f2f1;
+    }
+    .juice-img-wrap {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0;
+      margin-bottom: 18px;
+      padding: 0;
+    }
+    .juice-img-wrap img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 18px 18px 0 0;
+      object-fit: cover;
+      background: #f1f8e9;
+      border: 3px solid #e0f2f1;
+      box-shadow: 0 4px 24px rgba(60,120,80,0.10);
+      display: block;
+    }
+    .img-labels {
+      position: absolute;
+      top: 10px;
+      left: 18px;
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+    .date-label, .solar-label {
+      font-size: 0.86rem;
+      border-radius: 12px;
+      padding: 2px 10px;
+      box-shadow: 0 2px 8px rgba(137,201,151,0.08);
+      font-family: 'Montserrat', 'Noto Sans SC', sans-serif;
+      margin-right: 4px;
+    }
+    .date-label {
+      background: rgba(255,255,255,0.82);
+      color: #49505a;
+      font-style: normal;
+      font-weight: normal;
+    }
+    .solar-label {
+      background: rgba(246,190,154,0.82);
+      color: #fff;
+      font-weight: bold;
+    }
+    .juice-name-cn {
+      font-size: 1.25rem;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: bold;
+      color: #222;
+      margin-top: 2px;
+      margin-bottom: 2px;
       letter-spacing: 1px;
       text-align: center;
     }
-    .juice-img-wrap {
-      position: relative;
-      width: 80%;
-      max-width: 320px;
-      margin-bottom: 28px;
+    .juice-name-en {
+      font-size: 1rem;
+      color: #49505a;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 8px;
+      text-align: center;
+      font-style: italic;
+    }
+    .ingredients-label {
+      font-size: 0.98rem;
+      color: #222;
+      font-family: 'Noto Sans SC', sans-serif;
+      margin-bottom: 4px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
+      margin-top: 2px;
+      font-weight: bold;
     }
-    .juice-img {
+    .icon-leaf {
+      font-size: 1.1rem;
+      color: #3BA769;
+      margin-right: 2px;
+    }
+    .ingredients-tags {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      justify-content: center;
+      overflow-x: auto;
+    }
+    .tag {
+      background: #eaf6ef;
+      color: #3BA769;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 0.92rem;
+      font-family: 'Noto Sans SC', sans-serif;
+      letter-spacing: 1px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .poem-card {
+      background: #f6fbf7;
+      border-radius: 14px;
+      color: #49505a;
+      font-size: 0.96rem;
+      font-style: normal;
+      font-weight: 300;
+      font-family: 'Noto Sans SC', sans-serif;
+      margin: 0 18px 0 18px;
+      padding: 14px 10px 10px 10px;
+      text-align: center;
+      line-height: 1.9;
+      min-height: 48px;
+      opacity: 0.95;
+    }
+    .footer-bar {
+      width: 94vw;
+      max-width: 420px;
+      margin: 24px auto 0 auto;
+      background: #f6fbf7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px 18px 18px;
+      box-sizing: border-box;
+      z-index: 10;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -2px 12px rgba(137,201,151,0.08);
+    }
+    .main-btn {
+      background: #3BA769;
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      padding: 10px 38px;
+      font-size: 1.15rem;
+      font-family: 'Noto Serif SC', serif;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(111,207,151,0.10);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .main-btn:active { background: #2e7d4f; }
+    .footer-icons {
+      display: flex;
+      gap: 16px;
+    }
+    .img-placeholder {
       width: 100%;
       aspect-ratio: 4/3;
-      border-radius: 20px;
-      background: #f1f8e9;
-      box-shadow: 0 4px 24px rgba(60,120,80,0.10);
-      border: 3px solid #e0f2f1;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .juice-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-      background: #fff;
-      display: block;
-    }
-    .juice-img .img-placeholder {
-      width: 100%;
-      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #bbb;
       font-size: 1.1rem;
       background: #f5f5f5;
-      border-radius: 20px;
-    }
-    .change-btn {
+      border-radius: 18px 18px 0 0;
       position: absolute;
-      right: 0;
-      bottom: 0;
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      border: none;
-      border-radius: 16px;
-      padding: 6px 18px;
-      font-size: 1rem;
-      font-family: 'ZCOOL KuaiLe', 'Noto Serif SC', serif;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(111,207,151,0.10);
-      transition: background 0.3s, opacity 0.3s;
-      font-weight: bold;
-      letter-spacing: 1px;
-      opacity: 0.85;
-      z-index: 2;
-    }
-    .change-btn:hover:not(:disabled) {
-      background: var(--btn-bg-hover);
-      opacity: 1;
-    }
-    .change-btn:disabled {
-      background: var(--btn-disabled);
-      color: var(--btn-text-disabled);
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-    .ingredients-title {
-      font-size: 1.13rem;
-      color: var(--main);
-      font-weight: bold;
-      margin: 18px 0 8px 0;
-      letter-spacing: 1px;
-      text-align: center;
-      width: 100%;
-    }
-    .ingredients {
-      font-size: 1.08rem;
-      color: var(--main-dark);
-      font-weight: bold;
-      margin-bottom: 32px;
-      text-align: center;
-      line-height: 1.7;
-      width: 100%;
-      padding-left: 2px;
-      letter-spacing: 1px;
-    }
-    .poem {
-      font-size: 1.18rem;
-      color: #6b7a8f;
-      font-style: italic;
-      font-family: 'Noto Serif SC', serif;
-      margin: 0 0 0 0;
-      text-align: center;
-      line-height: 2.1;
-      min-height: 64px;
-      opacity: 0;
-      animation: fadePoem 1.2s 0.3s forwards;
-      width: 100%;
-      padding-left: 2px;
-      letter-spacing: 0.5px;
-    }
-    @keyframes fadePoem {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .share-tip {
-      margin-top: 28px;
-      font-size: 0.98rem;
-      color: var(--accent);
-      text-align: center;
+      left: 0;
+      top: 0;
+      z-index: 1;
     }
     @media (max-width: 600px) {
-      .main-title { font-size: 1.3rem; }
-      .card { padding: 14px 2vw 18px 2vw; margin-top: 10px; }
-      .juice-img-wrap { width: 98%; max-width: 98vw; }
-      .juice-img { border-radius: 12px; }
-      .juice-img img, .juice-img .img-placeholder { border-radius: 12px; }
-      .poem { font-size: 1rem; }
+      .main-content, .footer-bar, .navbar { max-width: 100vw; }
+      .juice-card { max-width: 99vw; }
     }
   </style>
 </head>
 <body>
-  <div id="auth-section" style="margin: 20px 0; max-width: 420px; width: 95vw; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(137,201,151,0.08); padding: 24px 18px; text-align: center;">
-    <div id="login-form">
-      <h3 style="margin-top:0;">登录</h3>
-      <input id="login-email" type="email" placeholder="邮箱" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
-      <input id="login-password" type="password" placeholder="密码" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
-      <button onclick="signIn()" style="margin: 10px 0; padding: 8px 24px; border-radius: 8px; background: #3BA769; color: #fff; border: none; font-weight: bold;">登录</button>
-      <div style="margin-top: 12px; font-size: 0.98rem; color: #666;">
-        没有账号？<a href="#" onclick="showSignUp();return false;" style="color:#3BA769;text-decoration:underline;">注册</a>
+  <!-- 顶部导航栏 -->
+  <header class="navbar">
+    <div class="nav-left">
+      <img src="leaf-logo.png" class="logo" alt="logo" />
+      <div class="title">
+        <span class="title-cn">Vitalcup</span>
+        <span class="title-en">每日蔬果</span>
       </div>
     </div>
-    <div id="signup-form" style="display:none;">
-      <h3 style="margin-top:0;">注册</h3>
-      <input id="signup-email" type="email" placeholder="邮箱" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
-      <input id="signup-password" type="password" placeholder="密码" style="margin: 6px 0; padding: 6px; width: 90%; border-radius: 6px; border: 1px solid #e0f2f1;" />
-      <button onclick="signUp()" style="margin: 10px 0; padding: 8px 24px; border-radius: 8px; background: #3BA769; color: #fff; border: none; font-weight: bold;">注册</button>
-      <div style="margin-top: 12px; font-size: 0.98rem; color: #666;">
-        已有账号？<a href="#" onclick="showLogin();return false;" style="color:#3BA769;text-decoration:underline;">登录</a>
-      </div>
+    <div class="nav-right">
+      <button class="icon-btn home" title="主页"><i class="ri-home-4-line"></i></button>
+      <button class="icon-btn history" title="历史记录"><i class="ri-time-line"></i></button>
+      <button class="icon-btn settings" title="系统设置"><i class="ri-settings-3-line"></i></button>
     </div>
-  </div>
-  <div id="main-section" style="display:none;">
-    <div class="card">
-      <div class="main-title">每日蔬果 Vitalcup</div>
-      <div class="subtitle" id="subtitle">2024年7月10日 · 小暑</div>
+  </header>
+  <!-- 主体内容区 -->
+  <main class="main-content">
+    <div class="main-title">今日推荐</div>
+    <div class="main-subtitle">为你精心挑选的纯净蔬果汁</div>
+    <div class="juice-card">
       <div class="juice-img-wrap">
-        <div class="juice-img" id="juiceImg">
-          <img id="juiceImgTag" src="vitalcup_20240710_2.jpg" alt="今日蔬果汁" />
-          <div id="img-error" class="img-placeholder" style="display:none;">图片加载失败</div>
+        <img id="juiceImgTag" src="vitalcup_20240710_2.jpg" alt="今日蔬果汁" />
+        <div id="img-error" class="img-placeholder" style="display:none;">图片加载失败</div>
+        <div class="img-labels">
+          <span class="date-label" id="dateLabel">2025年7月13日 星期日</span>
+          <span class="solar-label" id="solarLabel">小暑</span>
         </div>
-        <button class="change-btn" id="changeBtn">换一款</button>
       </div>
-      <div class="ingredients-title">原材料：</div>
-      <div class="ingredients" id="ingredients">芒果、奇异果、黄瓜、薄荷叶</div>
-      <div class="poem" id="poem">阳光透过玻璃，洒落在新鲜的芒果、奇异果与黄瓜之上，薄荷的清香在空气中轻轻荡漾。每一口，都是夏日清晨的第一缕微风，唤醒身体与心灵的温柔。</div>
-      <div class="share-tip">可分享今日蔬果卡片至微信/朋友圈/Instagram</div>
+      <div class="juice-name-cn" id="juiceNameCn">清心露</div>
+      <div class="juice-name-en" id="juiceNameEn">Morning Dew</div>
+      <div class="ingredients-label"><span class="icon-leaf"><i class="ri-leaf-line"></i></span> 今日配料</div>
+      <div class="ingredients-tags" id="ingredientsTags">
+        <span class="tag">芒果</span>
+        <span class="tag">奇异果</span>
+        <span class="tag">黄瓜</span>
+        <span class="tag">薄荷叶</span>
+      </div>
+      <div class="poem-card" id="poemCard">阳光透过玻璃，洒落在新鲜的芒果、奇异果与黄瓜之上，薄荷的清香在空气中轻轻荡漾。每一口，都是夏日清晨的第一缕微风，唤醒身体与心灵的温柔。</div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <footer class="footer-bar">
+      <button class="main-btn" id="changeBtn">换一款</button>
+      <div class="footer-icons">
+        <button class="icon-btn favorite" id="favoriteBtn" title="收藏"><i class="ri-heart-line"></i></button>
+        <button class="icon-btn share" id="shareBtn" title="分享"><i class="ri-share-forward-line"></i></button>
+      </div>
+    </footer>
+  </main>
   <script>
-    // Supabase配置
-    const SUPABASE_URL = 'https://ypscwsplzpbhevzfuoma.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlwc2N3c3BsenBiaGV2emZ1b21hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyMzg1MjEsImV4cCI6MjA2NzgxNDUyMX0.3i-LYP5N29-QC_i9rw4U0rSkkMulBu8S2RXdLSvRd3g';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // 你可以在这里适配原有JS逻辑到新结构
+    // 下面是主要内容动态填充和按钮事件适配
+    // 假设你有AI接口和配料、物语等数据
 
-    // 登录/注册切换逻辑
-    function showSignUp() {
-      document.getElementById('login-form').style.display = 'none';
-      document.getElementById('signup-form').style.display = '';
+    // 示例：动态填充内容
+    function updateJuiceCard(data) {
+      document.getElementById('juiceImgTag').src = data.imgUrl || 'vitalcup_20240710_2.jpg';
+      document.getElementById('juiceNameCn').textContent = data.name || '清心露';
+      document.getElementById('juiceNameEn').textContent = data.name_en || 'Morning Dew';
+      document.getElementById('dateLabel').textContent = data.date || getTodayDateStr();
+      document.getElementById('solarLabel').textContent = data.solar_term || '小暑';
+      // 配料标签
+      const tags = (data.ingredients || '芒果、奇异果、黄瓜、薄荷叶').split(/[、,，\s]+/);
+      const tagsHtml = tags.filter(Boolean).map(t => `<span class="tag">${t}</span>`).join('');
+      document.getElementById('ingredientsTags').innerHTML = tagsHtml;
+      document.getElementById('poemCard').textContent = data.poem || '';
     }
-    function showLogin() {
-      document.getElementById('login-form').style.display = '';
-      document.getElementById('signup-form').style.display = 'none';
-    }
-    // 登录状态切换显示
-    async function checkAuthAndShow() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-section').style.display = '';
-      } else {
-        document.getElementById('auth-section').style.display = '';
-        document.getElementById('main-section').style.display = 'none';
-        showLogin();
-      }
-    }
-    // 注册
-    async function signUp() {
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) {
-        alert('注册失败: ' + error.message);
-      } else {
-        alert('注册成功，请查收邮箱验证邮件！');
-        checkAuthAndShow();
-      }
-    }
-    // 登录
-    async function signIn() {
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) {
-        alert('登录失败: ' + error.message);
-      } else {
-        alert('登录成功！');
-        checkAuthAndShow();
-      }
-    }
-    // 页面加载时自动获取每日推荐内容
-    async function updateDailyJuiceFromAPI() {
-      try {
-        const resp = await fetch('/api/daily-juice');
-        const data = await resp.json();
-        document.getElementById('subtitle').textContent = `${data.date} · ${data.solar_term}`;
-        document.getElementById('ingredients').textContent = data.ingredients;
-        document.getElementById('poem').textContent = data.poem;
-      } catch {
-        // 可显示默认内容或错误提示
-      }
-    }
-    // 页面加载时自动调用
-    updateDailyJuiceFromAPI();
 
-    // 新增：换一款按钮调用AI生成
-    document.getElementById("changeBtn").onclick = async function() {
+    // 获取今天日期字符串（如：2025年7月13日 星期日）
+    function getTodayDateStr() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = now.getMonth() + 1;
+      const d = now.getDate();
+      const weekArr = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+      const week = weekArr[now.getDay()];
+      return `${y}年${m}月${d}日 ${week}`;
+    }
+    // 页面加载时自动设置日期
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('dateLabel').textContent = getTodayDateStr();
+    });
+
+    // 换一款按钮事件（适配你的AI接口）
+    document.getElementById('changeBtn').onclick = async function() {
       this.disabled = true;
       this.textContent = "生成中...";
       const imgEl = document.getElementById("juiceImgTag");
       const imgError = document.getElementById("img-error");
-      // 每次点击前，先隐藏错误占位，显示图片
       imgError.style.display = 'none';
       imgEl.style.display = '';
       try {
         // 1. 获取AI生成的蔬果汁内容
         const resp = await fetch('/api/ai-juice');
         const data = await resp.json();
-        document.querySelector(".ingredients-title").textContent = data.name || "蔬果禅饮";
-        document.getElementById("ingredients").textContent = data.ingredients;
-        document.getElementById("poem").textContent = data.poem;
-        // 2. 用配料内容生成图片
+        // 始终用最新的name和name_en渲染
+        document.getElementById("juiceNameCn").textContent = data.name || "清心露";
+        document.getElementById("juiceNameEn").textContent = data.name_en || "Morning Dew";
+        document.getElementById("dateLabel").textContent = data.date || "2025年7月13日 星期日";
+        document.getElementById("solarLabel").textContent = data.solar_term || "小暑";
+        // 配料标签兼容数组和字符串
+        let tags = [];
+        if (Array.isArray(data.ingredients)) {
+          tags = data.ingredients;
+        } else if (typeof data.ingredients === 'string') {
+          tags = data.ingredients.split(/[、,，\s]+/);
+        }
+        const tagsHtml = tags.filter(Boolean).map(t => `<span class='tag'>${t}</span>`).join('');
+        document.getElementById("ingredientsTags").innerHTML = tagsHtml;
+        // 物语字段兼容
+        document.getElementById("poemCard").textContent = data.物语 || data.poem || '';
+        // 2. 用配料内容生成图片，ingredients转为字符串
+        const ingredientsStr = Array.isArray(data.ingredients) ? data.ingredients.join('、') : data.ingredients;
         const imgResp = await fetch('/api/ai-image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ingredients: data.ingredients, name: data.name })
+          body: JSON.stringify({ ingredients: ingredientsStr, name: data.name })
         });
         const imgData = await imgResp.json();
         if (imgData.url) {
@@ -342,6 +428,25 @@
       }
       this.disabled = false;
       this.textContent = "换一款";
+    };
+    // 收藏按钮事件
+    document.getElementById('favoriteBtn').onclick = function() {
+      alert('已收藏！');
+    };
+    // 分享按钮事件
+    document.getElementById('shareBtn').onclick = function() {
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf('micromessenger') !== -1) {
+        alert('请点击右上角菜单进行分享');
+      } else if (navigator.share) {
+        navigator.share({
+          title: '每日蔬果 Vitalcup',
+          text: '今日蔬果卡片，健康又美味！',
+          url: window.location.href
+        });
+      } else {
+        alert('请用微信扫码或使用浏览器自带分享功能');
+      }
     };
   </script>
 </body>

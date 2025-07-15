@@ -138,7 +138,7 @@ app.get('/api/ai-juice', async (req, res) => {
   const { dateStr, solarTerm } = getTodayInfo();
   // 构造避免重复的提示
   const avoidLast = lastIngredients ? `上一次的配料是：${lastIngredients}，本次请尽量不同。` : '';
-  const prompt = `请为我生成一组全新的健康蔬果汁配料（4-6种，水果和蔬菜均衡），要求：\n1. 本次推荐的配料与上一次生成内容尽量不同，组合要新颖独特；\n2. 每种组合都要兼顾营养价值、口味和口感的多样性，同时符合当前节气的时令水果蔬菜（当前节气：${solarTerm}）；\n3. 配料之间不能存在食物相克的风险；\n${avoidLast}\n4. 返回格式为JSON：{\"name\":\"xxx\",\"ingredients\":\"xxx\",\"poem\":\"xxx\"}\n5. 并写一句富有诗意的物语；\n6. 原材料三个字去掉，这个位置每次生成一个蔬果汁的名字（富有禅意、简洁）`;
+  const prompt = `请为我生成一组全新的健康蔬果汁推荐，要求：\n1. 生成一个富有禅意、优雅且与配料和季节高度相关的中文名字，并为其生成一个独特、优美、与中文名和配料语义高度匹配的英文名（英文名字段必须为 name_en，不要用其他字段名，不要总是用 Morning Dew、Serene Clouds 等通用词汇，每次都要有变化，且不要与上一次英文名重复）；\n2. 生成4-6种水果和蔬菜的配料，水果和蔬菜均衡；\n3. 每种组合都要兼顾营养价值、口味和口感的多样性，同时符合当前节气的时令水果蔬菜（当前节气：${solarTerm}）；\n4. 配料之间不能存在食物相克的风险；\n${avoidLast}\n5. 返回格式为JSON：{\"name\":\"xxx\",\"name_en\":\"xxx\",\"ingredients\":[\"xxx\",\"xxx\"],\"poem\":\"xxx\",\"物语\":\"xxx\"}\n6. 并写一句富有诗意的物语。`;
   try {
     const body = {
       model: "qwen-plus",
@@ -154,20 +154,32 @@ app.get('/api/ai-juice', async (req, res) => {
     };
     const resp = await axios.post(QWEN_API_URL, body, { headers });
     let text = resp.data.choices[0].message.content.trim();
+    console.log('AI原始返回内容:', text);
     // 只提取JSON部分
     const match = text.match(/\{[\s\S]*\}/);
     let data;
     if (match) {
       data = JSON.parse(match[0]);
     } else {
-      data = { name: "清心露", ingredients: "苹果、黄瓜、薄荷、菠菜、橙子、胡萝卜", poem: "清晨的第一缕阳光，藏在蔬果的清甜里。" };
+      data = { name: "清心露", name_en: "Morning Dew", ingredients: ["苹果","黄瓜","薄荷","菠菜","橙子","胡萝卜"], poem: "清晨的第一缕阳光，藏在蔬果的清甜里。", "物语": "清新甘露，润泽心田。" };
     }
+    // 英文名兼容多种字段
+    if (!data.name_en) {
+      data.name_en = data.英文名 || data.en_name || data.english_name || '';
+      // 尝试用正则提取英文名
+      if (!data.name_en) {
+        const enMatch = text.match(/"name_en"\s*:\s*"([^"]+)"/i) || text.match(/"英文名"\s*:\s*"([^"]+)"/i) || text.match(/"en_name"\s*:\s*"([^"]+)"/i) || text.match(/"english_name"\s*:\s*"([^"]+)"/i);
+        if (enMatch) data.name_en = enMatch[1];
+      }
+      if (!data.name_en) data.name_en = "Morning Dew";
+    }
+    console.log('最终JSON数据:', data);
     // 记录本次配料，供下次避免重复
-    lastIngredients = data.ingredients || '';
+    lastIngredients = Array.isArray(data.ingredients) ? data.ingredients.join('、') : (data.ingredients || '');
     res.json(data);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ name: "清心露", ingredients: "苹果、黄瓜、薄荷、菠菜、橙子、胡萝卜", poem: "清晨的第一缕阳光，藏在蔬果的清甜里。" });
+    res.status(500).json({ name: "清心露", name_en: "Morning Dew", ingredients: ["苹果","黄瓜","薄荷","菠菜","橙子","胡萝卜"], poem: "清晨的第一缕阳光，藏在蔬果的清甜里。", "物语": "清新甘露，润泽心田。" });
   }
 });
 
