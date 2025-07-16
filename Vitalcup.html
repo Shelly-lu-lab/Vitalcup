@@ -932,14 +932,58 @@
       <div class="feedback-tip" id="feedbackTip"></div>
     </div>
   </div>
+  <!-- 移除原有 toast 容器，这里不再插入 <div id="toast"> -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
   <script>
+    // ========== Toast 弹窗函数，需放在所有 JS 逻辑最前面 ==========
+    function showToast(msg, duration = 1500) {
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.style.display = 'none';
+        toast.style.position = 'fixed';
+        toast.style.left = '50%';
+        toast.style.bottom = '80px';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = 'rgba(60,120,80,0.95)';
+        toast.style.color = '#fff';
+        toast.style.padding = '12px 28px';
+        toast.style.borderRadius = '24px';
+        toast.style.fontSize = '1.08rem';
+        toast.style.zIndex = '9999';
+        toast.style.boxShadow = '0 2px 12px rgba(60,120,80,0.13)';
+        toast.style.transition = 'opacity 0.3s';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      toast.style.opacity = '1';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => { toast.style.display = 'none'; }, 300);
+      }, duration);
+    }
     // Supabase配置
     const SUPABASE_URL = 'https://ypscwsplzpbhevzfuoma.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlwc2N3c3BsenBiaGV2emZ1b21hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyMzg1MjEsImV4cCI6MjA2NzgxNDUyMX0.3i-LYP5N29-QC_i9rw4U0rSkkMulBu8S2RXdLSvRd3g';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   </script>
   <script>
+    window.onload = function() {
+      const hash = window.location.hash;
+      if (hash.includes('error=')) {
+        if (hash.includes('otp_expired')) {
+          alert('邮箱验证链接已失效或已被使用，请重新注册或登录。');
+        } else {
+          alert('邮箱验证失败，请重试。');
+        }
+      } else if (hash.includes('access_token=')) {
+        alert('邮箱验证成功！请返回登录页面登录。');
+        // 可选：自动跳转到主页面
+        // window.location.href = '/Vitalcup.html';
+      }
+    };
     // 统一声明全局视图变量，避免重复声明
     const mainContent = document.querySelector('.main-content');
     const historyView = document.getElementById('historyView');
@@ -1344,7 +1388,7 @@
     document.getElementById('favoriteBtn').onclick = async function() {
       const btn = this;
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { alert('请先登录'); return; }
+      if (!user) { showToast('请先登录'); return; }
       const name = document.getElementById('juiceNameCn').textContent;
       const name_en = document.getElementById('juiceNameEn').textContent;
       const date = document.getElementById('dateLabel').textContent;
@@ -1359,7 +1403,7 @@
         .eq('user_id', user.id)
         .eq('juice_id', juice_id);
       if (favs && favs.length > 0) {
-        alert('已收藏过该果汁');
+        showToast('已收藏过该果汁');
         // 立即本地切换为红色实心
         btn.innerHTML = '<i class="ri-heart-fill"></i>';
         btn.style.color = '#e74c3c';
@@ -1371,9 +1415,9 @@
         .from('favorites')
         .insert([{ user_id: user.id, juice_id, name, name_en, date, solar_term, poem, image_url: imgUrl, ingredients: tags }]);
       if (error) {
-        alert('收藏失败');
+        showToast('收藏失败');
       } else {
-        alert('已收藏！');
+        showToast('收藏成功');
         // 立即本地切换为红色实心
         btn.innerHTML = '<i class="ri-heart-fill"></i>';
         btn.style.color = '#e74c3c';
@@ -1430,6 +1474,87 @@
     };
     // 页面初始也调用
     document.addEventListener('DOMContentLoaded', afterJuiceCardUpdate);
+
+    // ========== 自动生成首页果蔬汁内容并保存历史 ==========
+    async function generateAndRenderJuice(showToastOnSuccess = false) {
+      try {
+        const resp = await fetch('/api/ai-juice');
+        const data = await resp.json();
+        const ingredientsStr = Array.isArray(data.ingredients) ? data.ingredients.join('、') : data.ingredients;
+        const imgResp = await fetch('/api/ai-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ingredients: ingredientsStr, name: data.name })
+        });
+        const imgData = await imgResp.json();
+        updateJuiceCard({
+          ...data,
+          imgUrl: imgData.url
+        });
+        await saveHistoryRecord({
+          date: data.date || getTodayDateStr(),
+          solar_term: data.solar_term || '',
+          name: data.name || '',
+          name_en: data.name_en || '',
+          ingredients: Array.isArray(data.ingredients) ? data.ingredients : (typeof data.ingredients === 'string' ? data.ingredients.split(/[、,，\s]+/) : []),
+          poem: data.物语 || data.poem || '',
+          image_url: imgData.url
+        });
+        if (showToastOnSuccess) showToast('新的一天，已为你推荐新果蔬汁！');
+      } catch (e) {
+        showToast('自动更新失败，请刷新页面');
+      }
+    }
+
+    // ========== 页面加载时自动生成首页内容 ==========
+    let lastDateStr = getTodayDateStr();
+    // ========== 每天跨天自动刷新内容 ==========
+    setInterval(async function() {
+      const nowDateStr = getTodayDateStr();
+      if (nowDateStr !== lastDateStr) {
+        lastDateStr = nowDateStr;
+        await generateAndRenderJuice(true);
+        document.getElementById('dateLabel').textContent = nowDateStr;
+      }
+    }, 60 * 1000); // 每分钟检测一次
+
+    // ========== 反馈弹窗逻辑 ==========
+    const feedbackModal = document.getElementById('feedbackModal');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbackContent = document.getElementById('feedbackContent');
+    const feedbackTip = document.getElementById('feedbackTip');
+    const feedbackTitle = document.getElementById('feedbackTitle');
+    const feedbackSubmitBtn = document.getElementById('feedbackSubmitBtn');
+
+    function showFeedbackModal(show) {
+      feedbackModal.style.display = show ? 'flex' : 'none';
+    }
+
+    feedbackForm.onsubmit = async function(e) {
+      e.preventDefault();
+      const content = feedbackContent.value.trim();
+      feedbackSubmitBtn.disabled = true;
+      feedbackTip.textContent = '提交中...';
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+          .from('feedback')
+          .insert([{ user_id: user?.id, content, created_at: new Date().toISOString() }]);
+        if (error) throw error;
+        feedbackTip.style.color = '#3BA769';
+        feedbackTip.textContent = '反馈提交成功！';
+        setTimeout(() => showFeedbackModal(false), 1500);
+        feedbackContent.value = '';
+      } catch (err) {
+        feedbackTip.style.color = '#e57373';
+        feedbackTip.textContent = err.message || '提交失败';
+      }
+      feedbackSubmitBtn.disabled = false;
+    };
+
+    feedbackSetting.onclick = function() {
+      document.getElementById('feedbackModal').style.display = 'flex';
+    };
   </script>
 </body>
 </html>

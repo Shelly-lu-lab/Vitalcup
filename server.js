@@ -5,6 +5,10 @@ const path = require('path');
 const crypto = require('crypto');
 const chineseLunar = require('chinese-lunar');
 const DATA_FILE = path.join(__dirname, 'daily_juice.json');
+const { createClient } = require('@supabase/supabase-js');
+const SUPABASE_URL = 'https://ypscwsplzpbhevzfuoma.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlwc2N3c3BsenBiaGV2emZ1b21hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyMzg1MjEsImV4cCI6MjA2NzgxNDUyMX0.3i-LYP5N29-QC_i9rw4U0rSkkMulBu8S2RXdLSvRd3g';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const app = express();
 const PORT = 3000;
@@ -134,12 +138,23 @@ app.get('/api/daily-juice', async (req, res) => {
 
 // 新增：AI生成蔬果汁配料和物语的API
 app.get('/api/ai-juice', async (req, res) => {
+  // 获取所有历史中文名
+  let historyNames = [];
+  try {
+    const { data: historyData, error } = await supabase.from('history').select('name');
+    if (!error && Array.isArray(historyData)) {
+      historyNames = historyData.map(item => item.name);
+    }
+  } catch (e) { console.error('获取历史名称失败', e); }
   // 获取当前节气
   const { dateStr, solarTerm } = getTodayInfo();
   // 构造避免重复的提示
   const avoidLast = lastIngredients ? `上一次的配料是：${lastIngredients}，本次请尽量不同。` : '';
-  const prompt = `请为我生成一组全新的健康蔬果汁推荐，要求：\n1. 生成一个富有禅意、优雅且与配料和季节高度相关的中文名字，并为其生成一个独特、优美、与中文名和配料语义高度匹配的英文名（英文名字段必须为 name_en，不要用其他字段名，不要总是用 Morning Dew、Serene Clouds 等通用词汇，每次都要有变化，且不要与上一次英文名重复）；\n2. 生成4-6种水果和蔬菜的配料，水果和蔬菜均衡；\n3. 每种组合都要兼顾营养价值、口味和口感的多样性，同时符合当前节气的时令水果蔬菜（当前节气：${solarTerm}）；\n4. 配料之间不能存在食物相克的风险；\n${avoidLast}\n5. 返回格式为JSON：{\"name\":\"xxx\",\"name_en\":\"xxx\",\"ingredients\":[\"xxx\",\"xxx\"],\"poem\":\"xxx\",\"物语\":\"xxx\"}\n6. 并写一句富有诗意的物语。`;
-  try {
+  let data = null;
+  let tryCount = 0;
+  while (tryCount < 10) {
+    tryCount++;
+    const prompt = `请为我生成一组全新的健康蔬果汁推荐，要求：\n1. 生成一个富有禅意、优雅且与配料和季节高度相关的中文名字，并为其生成一个独特、优美、与中文名和配料语义高度匹配的英文名（英文名字段必须为 name_en，不要用其他字段名，不要总是用 Morning Dew、Serene Clouds 等通用词汇，每次都要有变化，且不要与上一次英文名重复）；\n2. 生成4-6种水果和蔬菜的配料，水果和蔬菜均衡；\n3. 每种组合都要兼顾营养价值、口味和口感的多样性，同时符合当前节气的时令水果蔬菜（当前节气：${solarTerm}）；\n4. 配料之间不能存在食物相克的风险；\n${avoidLast}\n5. 返回格式为JSON：{\"name\":\"xxx\",\"name_en\":\"xxx\",\"ingredients\":[\"xxx\",\"xxx\"],\"poem\":\"xxx\",\"物语\":\"xxx\"}\n6. 并写一句富有诗意的物语。`;
     const body = {
       model: "qwen-plus",
       messages: [
@@ -154,10 +169,8 @@ app.get('/api/ai-juice', async (req, res) => {
     };
     const resp = await axios.post(QWEN_API_URL, body, { headers });
     let text = resp.data.choices[0].message.content.trim();
-    console.log('AI原始返回内容:', text);
     // 只提取JSON部分
     const match = text.match(/\{[\s\S]*\}/);
-    let data;
     if (match) {
       data = JSON.parse(match[0]);
     } else {
@@ -166,21 +179,21 @@ app.get('/api/ai-juice', async (req, res) => {
     // 英文名兼容多种字段
     if (!data.name_en) {
       data.name_en = data.英文名 || data.en_name || data.english_name || '';
-      // 尝试用正则提取英文名
       if (!data.name_en) {
         const enMatch = text.match(/"name_en"\s*:\s*"([^"]+)"/i) || text.match(/"英文名"\s*:\s*"([^"]+)"/i) || text.match(/"en_name"\s*:\s*"([^"]+)"/i) || text.match(/"english_name"\s*:\s*"([^"]+)"/i);
         if (enMatch) data.name_en = enMatch[1];
       }
       if (!data.name_en) data.name_en = "Morning Dew";
     }
-    console.log('最终JSON数据:', data);
-    // 记录本次配料，供下次避免重复
-    lastIngredients = Array.isArray(data.ingredients) ? data.ingredients.join('、') : (data.ingredients || '');
-    res.json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ name: "清心露", name_en: "Morning Dew", ingredients: ["苹果","黄瓜","薄荷","菠菜","橙子","胡萝卜"], poem: "清晨的第一缕阳光，藏在蔬果的清甜里。", "物语": "清新甘露，润泽心田。" });
+    // 检查中文名是否重复
+    if (data.name && !historyNames.includes(data.name)) {
+      break;
+    }
+    // 如果重复，继续循环生成
   }
+  // 记录本次配料，供下次避免重复
+  lastIngredients = Array.isArray(data.ingredients) ? data.ingredients.join('、') : (data.ingredients || '');
+  res.json(data);
 });
 
 const WANXIANG_API_KEY = 'sk-6a496d64be234dd98bd17ea6992b2d15';
@@ -238,6 +251,10 @@ app.post('/api/ai-image', async (req, res) => {
     console.error(err);
     res.status(500).json({ url: '', msg: 'API调用失败' });
   }
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Vitalcup.html'));
 });
 
 app.listen(PORT, () => {
