@@ -819,15 +819,15 @@
         <span id="switchToLogin" style="display:none;">已有账号？登录</span>
       </div>
     </div>
-  </div>
+      </div>
   <header class="navbar">
     <div class="nav-left">
       <img src="leaf-logo.png" class="logo" alt="logo" />
       <div class="title">
         <span class="title-cn">Vitalcup</span>
         <span class="title-en">每日蔬果</span>
-      </div>
     </div>
+  </div>
     <div class="nav-right">
       <button class="icon-btn home" title="主页"><i class="ri-home-4-line"></i></button>
       <button class="icon-btn history" title="历史记录"><i class="ri-time-line"></i></button>
@@ -854,9 +854,9 @@
         <span class="tag">奇异果</span>
         <span class="tag">黄瓜</span>
         <span class="tag">薄荷叶</span>
-      </div>
-      <div class="poem-card" id="poemCard">阳光透过玻璃，洒落在新鲜的芒果、奇异果与黄瓜之上，薄荷的清香在空气中轻轻荡漾。每一口，都是夏日清晨的第一缕微风，唤醒身体与心灵的温柔。</div>
     </div>
+      <div class="poem-card" id="poemCard">阳光透过玻璃，洒落在新鲜的芒果、奇异果与黄瓜之上，薄荷的清香在空气中轻轻荡漾。每一口，都是夏日清晨的第一缕微风，唤醒身体与心灵的温柔。</div>
+  </div>
     <footer class="footer-bar">
       <button class="main-btn" id="changeBtn">换一款</button>
       <div class="footer-icons">
@@ -1091,7 +1091,7 @@
             poem: data.物语 || data.poem || '',
             image_url: imgData.url
           });
-        } else {
+      } else {
           imgEl.style.display = 'none';
           imgError.style.display = 'flex';
         }
@@ -1159,7 +1159,7 @@
       authTip.textContent = isLoginMode ? '登录中...' : '注册中...';
       try {
         if (isLoginMode) {
-          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
           if (error) throw error;
           authTip.style.color = '#3BA769';
           authTip.textContent = '登录成功！';
