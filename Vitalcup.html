@@ -1079,8 +1079,27 @@
       if (error) console.error('保存历史记录失败', error);
     }
 
+    // ========== 每日生成次数限制 ==========
+    function getTodayKey() {
+      const now = new Date();
+      return `vitalcup-generate-count-${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+    }
+    function getTodayGenerateCount() {
+      return parseInt(localStorage.getItem(getTodayKey()) || '0', 10);
+    }
+    function incTodayGenerateCount() {
+      const key = getTodayKey();
+      const count = getTodayGenerateCount() + 1;
+      localStorage.setItem(key, count);
+      return count;
+    }
+
     // 换一款按钮事件（适配你的AI接口）
     document.getElementById('changeBtn').onclick = async function() {
+      if (getTodayGenerateCount() >= 3) {
+        showToast('今日生成次数已达上限，请明天再试~');
+        return;
+      }
       this.disabled = true;
       this.textContent = "生成中...";
       const imgEl = document.getElementById("juiceImgTag");
@@ -1135,6 +1154,7 @@
             poem: data.物语 || data.poem || '',
             image_url: imgData.url
           });
+          incTodayGenerateCount();
       } else {
           imgEl.style.display = 'none';
           imgError.style.display = 'flex';
@@ -1477,6 +1497,10 @@
 
     // ========== 自动生成首页果蔬汁内容并保存历史 ==========
     async function generateAndRenderJuice(showToastOnSuccess = false) {
+      if (getTodayGenerateCount() >= 3) {
+        showToast('今日生成次数已达上限，请明天再试~');
+        return;
+      }
       try {
         const resp = await fetch('/api/ai-juice');
         const data = await resp.json();
@@ -1500,6 +1524,7 @@
           poem: data.物语 || data.poem || '',
           image_url: imgData.url
         });
+        incTodayGenerateCount();
         if (showToastOnSuccess) showToast('新的一天，已为你推荐新果蔬汁！');
       } catch (e) {
         showToast('自动更新失败，请刷新页面');
